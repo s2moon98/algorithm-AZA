@@ -27,7 +27,7 @@ public class Main {
     private static void input() throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         n = Integer.parseInt(br.readLine());
-        numbers = new int[n+1]; // 최대치인 10001은 OutOfBound 에러가 안뜨는데 n+1로 하면 뜬다. 이유를 모르겠어!
+        numbers = new int[n+1]; // 최대치인 10001은 OutOfBound 에러가 안뜨는데 n+1로 하면 뜬다. 이유를 모르겠어!!
         dp = new int[n+1];
 
         for(int i = 1; i <= n; i++)
