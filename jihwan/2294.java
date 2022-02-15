@@ -3,41 +3,46 @@ package coding_test;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Arrays;
 import java.util.StringTokenizer;
 
 public class Main {
-    private static int LIMIT = 100001;
-    static int N, K, answer = 0;
-    static int[] coins, dp;
+    static int N, K, LIMIT = 100000;
+    static int[][] dp;
+    static int[] coins;
+
+    // 메모이제이션하는 배열을 늘리고, dp[i][j]의 뜻은 i개의 동전들로 j 값을 만들 수 있는 최소의 개수라는 뜻.
 
     public static void main(String[] args) throws IOException {
         input();
-        answer = logic(K);
+        int answer = logic(N, K);
         System.out.println(answer == LIMIT ? -1 : answer);
     }
 
-    private static int logic(int target) {
-        if(dp[target] != LIMIT) return dp[target];
-        for(int i = 0; i < N; i++) {
-            if(target - coins[i] > 0)
-                dp[target] = Math.min(dp[target], logic(target - coins[i]) + 1);
-        }
-        return dp[target];
+    private static int logic(int count, int value) {
+        if(count == 0) return value == 0 ? 0 : LIMIT;
+        if(dp[count][value] != -1) return dp[count][value];
+
+        int res = logic(count-1, value); // coin의 크기를 N으로 설정했기 때문에, 원하는 위치를 호출하기 위해서는 -1 해야함. 만약 처음부터 1~N 까지 받는다면 이런 짓은 안해도 된다..!
+        if(value >= coins[count-1]) res = Math.min(res, logic(count, value-coins[count-1])+1);
+        dp[count][value] = res;
+        return res;
     }
 
     private static void input() throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine());
+
         N = Integer.parseInt(st.nextToken());
         K = Integer.parseInt(st.nextToken());
         coins = new int[N];
-        dp = new int[LIMIT];
-        Arrays.fill(dp, LIMIT);
+        dp = new int[N+1][K+1];
 
-        for(int i = 0; i < N; i++) {
+        for(int i = 0; i <= N; i++)
+            for(int j = 0; j <= K; j++)
+                dp[i][j] = -1;
+
+        for (int i = 0; i < N; i++)
             coins[i] = Integer.parseInt(br.readLine());
-            dp[coins[i]] = 1;
-        }
+
     }
 }
