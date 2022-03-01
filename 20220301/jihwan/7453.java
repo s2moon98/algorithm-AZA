@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.StringTokenizer;
 
+//?
 public class Main {
     static int N;
     static long[] A, B, C, D, AB, CD;
