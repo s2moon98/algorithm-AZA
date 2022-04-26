@@ -61,4 +61,4 @@ https://github.com/tony9402/baekjoon
 #### 5/3 - 구현
 16719
 14719
-12933
+14467
